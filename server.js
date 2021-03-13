@@ -95,7 +95,7 @@ function viewAllDepts() {
 
 //View All Roles
 function viewAllRoles() {
-  connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;", 
+  connection.query("SELECT title, salary, department_id FROM role JOIN department;", 
   function(err, res) {
   if (err) throw err
   console.table(res)
