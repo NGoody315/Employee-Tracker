@@ -1,23 +1,18 @@
-CREATE DATABASE employee_db;
+USE employees_db;
 
-USE employee_db;
+INSERT INTO department (name) VALUES ("Human Resources");
+INSERT INTO department (name) VALUES ("SM Marketing");
+INSERT INTO department (name) VALUES ("Sales");
+INSERT INTO department (name) VALUES ("Corporate");
 
-CREATE TABLE `employee_db`.`department` (
-  `id` INT NOT NULL,
-  `name` VARCHAR(30) NULL,
-  PRIMARY KEY (`id`));
+INSERT INTO role (title, salary, department_id) VALUES ("Sales Rep", 70000.00, 3);
+INSERT INTO role (title, salary, department_id) VALUES ("Communications Associate", 50000.00, 2);
+INSERT INTO role (title, salary, department_id) VALUES ("Social Media Manager", 50000.00, 2);
+INSERT INTO role (title, salary, department_id) VALUES ("Director", 100000.00, 1);
+INSERT INTO role (title, salary, department_id) VALUES ("Director", 100000.00, 4);
 
-CREATE TABLE `employee_db`.`role` (
-  `id` INT NOT NULL,
-  `title` VARCHAR(30) NULL,
-  `salary` DECIMAL(10,2) NULL,
-  `department_id` INT NULL,
-  PRIMARY KEY (`id`));
-
-CREATE TABLE `employee_db`.`employee` (
-  `id` INT NOT NULL,
-  `first_name` VARCHAR(30) NULL,
-  `last_name` VARCHAR(30) NULL,
-  `role_id` INT NULL,
-  `manager_id` INT NULL,
-  PRIMARY KEY (`id`));
+INSERT INTO employee (first_name, last_name, role_id) VALUES ("Steve", "Rogers", 2);
+INSERT INTO employee (first_name, last_name, role_id) VALUES ("Natasha", "Romanoff", 1);
+INSERT INTO employee (first_name, last_name, role_id) VALUES ("Wanda", "Maximoff", 3);
+INSERT INTO employee (first_name, last_name, role_id) VALUES ("James", "Barnes", 4);
+INSERT INTO employee (first_name, last_name, role_id) VALUES ("Tony", "Stark", 5);
