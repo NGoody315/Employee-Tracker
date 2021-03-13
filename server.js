@@ -27,6 +27,7 @@ function startPrompt() {
     name: "choice",
     choices: [
               "View All Employees?", 
+              "View All Departments",
               "View All Employee's By Roles?",
               "View all Emplyees By Deparments", 
               "Update Employee",
@@ -40,10 +41,15 @@ function startPrompt() {
             case "View All Employees?":
               viewAllEmployees();
             break;
+
+            case "View All Departments?":
+              viewAllDepts();
+            break;
     
           case "View All Employee's By Roles?":
               viewAllRoles();
             break;
+
           case "View all Emplyees By Deparments":
               viewAllDepartments();
             break;
@@ -75,7 +81,18 @@ function viewAllEmployees() {
       console.table(res)
       startPrompt()
   })
-}
+};
+
+//View All Departments
+function viewAllDepts() {
+    connection.query("SELECT * FROM department;", 
+    function(err, res) {
+    if (err) throw err
+    console.table(res)
+    startPrompt()
+    })
+  };
+
 //View All Roles
 function viewAllRoles() {
   connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;", 
@@ -84,7 +101,8 @@ function viewAllRoles() {
   console.table(res)
   startPrompt()
   })
-}
+};
+
 //View All Employees and Their Departments
 function viewAllDepartments() {
   connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;", 
@@ -93,7 +111,7 @@ function viewAllDepartments() {
     console.table(res)
     startPrompt()
   })
-}
+};
 
 //Select the Title Query
 var roleArr = [];
@@ -106,7 +124,8 @@ function selectRole() {
 
   })
   return roleArr;
-}
+};
+
 //Select the Manager Query
 var managersArr = [];
 function selectManager() {
@@ -118,7 +137,8 @@ function selectManager() {
 
   })
   return managersArr;
-}
+};
+
 //Add Employee
 function addEmployee() { 
     inquirer.prompt([
@@ -161,7 +181,8 @@ function addEmployee() {
       })
 
   })
-}
+};
+
 //Update Employee
   function updateEmployee() {
     connection.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;", function(err, res) {
@@ -205,8 +226,8 @@ function addEmployee() {
   
     });
   });
+  };
 
-  }
 //Add Employee Role
 function addRole() { 
   connection.query("SELECT role.title AS Title, role.salary AS Salary FROM role",   function(err, res) {
@@ -238,7 +259,8 @@ function addRole() {
 
     });
   });
-  }
+  };
+
 //Add Department
 function addDepartment() { 
 
@@ -262,4 +284,4 @@ function addDepartment() {
             }
         )
     })
-  }
+  };
