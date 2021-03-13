@@ -29,7 +29,7 @@ function startPrompt() {
               "View All Employees?", 
               "View All Departments",
               "View All Employee's By Roles?",
-              "View all Emplyees By Deparments", 
+              "View all Employees By Deparments", 
               "Update Employee",
               "Add Employee?",
               "Add Role?",
@@ -50,7 +50,7 @@ function startPrompt() {
               viewAllRoles();
             break;
 
-          case "View all Emplyees By Deparments":
+          case "View all Employees By Deparments":
               viewAllDepartments();
             break;
           
