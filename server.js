@@ -26,27 +26,27 @@ function startPrompt() {
     message: "What would you like to do?",
     name: "choice",
     choices: [
-              "View All Employees?", 
+              "View All Employees", 
               "View All Departments",
-              "View All Employee's By Roles?",
+              "View All Roles",
               "View all Employees By Deparments", 
               "Update Employee",
-              "Add Employee?",
-              "Add Role?",
-              "Add Department?"
+              "Add Employee",
+              "Add Role",
+              "Add Department"
             ]
     }
 ]).then(function(val) {
         switch (val.choice) {
-            case "View All Employees?":
+            case "View All Employees":
               viewAllEmployees();
             break;
 
-            case "View All Departments?":
+            case "View All Departments":
               viewAllDepts();
             break;
     
-          case "View All Employee's By Roles?":
+          case "View All Roles":
               viewAllRoles();
             break;
 
@@ -54,7 +54,7 @@ function startPrompt() {
               viewAllDepartments();
             break;
           
-          case "Add Employee?":
+          case "Add Employee":
                 addEmployee();
               break;
 
@@ -62,11 +62,11 @@ function startPrompt() {
                 updateEmployee();
               break;
       
-            case "Add Role?":
+            case "Add Role":
                 addRole();
               break;
       
-            case "Add Department?":
+            case "Add Department":
                 addDepartment();
               break;
     
@@ -75,7 +75,7 @@ function startPrompt() {
 }
 //View All Employees
 function viewAllEmployees() {
-    connection.query("SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;", 
+    connection.query("SELECT * FROM employee;", 
     function(err, res) {
       if (err) throw err
       console.table(res)
@@ -95,7 +95,7 @@ function viewAllDepts() {
 
 //View All Roles
 function viewAllRoles() {
-  connection.query("SELECT title, salary, department_id FROM role JOIN department;", 
+  connection.query("SELECT title, salary, department_id FROM role JOIN department GROUP BY department_id;", 
   function(err, res) {
   if (err) throw err
   console.table(res)
@@ -143,12 +143,12 @@ function selectManager() {
 function addEmployee() { 
     inquirer.prompt([
         {
-          name: "firstname",
+          name: "firstName",
           type: "input",
           message: "Enter their first name "
         },
         {
-          name: "lastname",
+          name: "lastName",
           type: "input",
           message: "Enter their last name "
         },
@@ -208,16 +208,15 @@ function addEmployee() {
             choices: selectRole()
           },
       ]).then(function(val) {
-        var roleId = selectRole().indexOf(val.role) + 1
-        connection.query("UPDATE employee SET WHERE ?", 
-        {
-          last_name: val.lastName
-           
-        }, 
+        var roleId = parseInt(selectRole().indexOf(val.role) + 1)
+        console.log(roleId),
+        connection.query("UPDATE employee SET ? WHERE ?", [
         {
           role_id: roleId
-           
-        }, 
+        },
+        {
+          last_name: val.lastName
+        }], 
         function(err){
             if (err) throw err
             console.table(val)
